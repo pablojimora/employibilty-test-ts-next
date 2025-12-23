@@ -11,8 +11,7 @@ export default function Home() {
     fetch("https://rickandmortyapi.com/api/character")
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-        setCharacters(data.results)
+        setCharacters(data)
         setLoading(false)
       })
   }, [])
