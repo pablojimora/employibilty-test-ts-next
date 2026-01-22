@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import LoadingState from '@/components/Loadingstate';
 
 export default function Home() {
   const { user } = useAuth();
@@ -17,5 +16,12 @@ export default function Home() {
     }
   }, [user, router]);
 
-  return <LoadingState />;
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="text-center">
+        <div className="spinner-border text-primary mb-3" role="status"></div>
+        <p className="text-gray-600">Redirigiendo...</p>
+      </div>
+    </div>
+  );
 }

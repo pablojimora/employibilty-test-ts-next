@@ -208,8 +208,12 @@ export default function DashboardPage() {
       {!loading && characters.length > 0 && (
         <div className="my-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {characters.map(character => (
-            <div key={character.id} className="h-full">
-              <div className="card h-100 shadow-sm hover:shadow-lg transition-shadow">
+            <div 
+              key={character.id} 
+              className="h-full cursor-pointer transform transition-all duration-300 hover:scale-105"
+              onClick={() => router.push(`/character/${character.id}`)}
+            >
+              <div className="card h-100 shadow-sm hover:shadow-xl transition-shadow">
                 <img
                   src={character.image}
                   alt={character.name}
@@ -239,6 +243,9 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 mb-0">
                       <strong>Género:</strong> {character.gender}
                     </p>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <span className="text-xs text-blue-600 font-semibold">Ver detalles →</span>
                   </div>
                 </div>
               </div>
