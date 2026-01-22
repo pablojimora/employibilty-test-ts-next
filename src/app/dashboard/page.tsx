@@ -12,27 +12,27 @@ export default function DashboardPage() {
   const { user } = useAuth();
   const router = useRouter();
   
-  // Estados de datos
+  // Data states
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Estados de paginación
+  // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   
-  // Estados de filtros
-  const [searchInput, setSearchInput] = useState(''); // Input temporal
+  // Filter states
+  const [searchInput, setSearchInput] = useState(''); // Temporary input
   const [search, setSearch] = useState(''); // Debounced
   const [statusFilter, setStatusFilter] = useState<string>('');
   
-  // Estados de estadísticas globales
+  // Global statistics states
   const [aliveCount, setAliveCount] = useState(0);
   const [deadCount, setDeadCount] = useState(0);
   const [unknownCount, setUnknownCount] = useState(0);
 
-  // Redirect si no hay usuario
+  // Redirect if no user
   useEffect(() => {
     if (!user) {
       router.push('/login');
@@ -41,17 +41,17 @@ export default function DashboardPage() {
     }
   }, [user, router]);
 
-  // Debounce para el buscador (500ms)
+  // Debounce for search (500ms)
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSearch(searchInput);
-      setCurrentPage(1); // Reset a página 1 cuando busca
+      setCurrentPage(1); // Reset to page 1 when searching
     }, 500);
 
     return () => clearTimeout(timeout);
   }, [searchInput]);
 
-  // Fetch characters cuando cambian página o filtros
+  // Fetch characters when page or filters change
   useEffect(() => {
     if (user) {
       fetchCharacters();
@@ -103,7 +103,7 @@ export default function DashboardPage() {
 
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);
-    setCurrentPage(1); // Reset a página 1
+    setCurrentPage(1); // Reset to page 1
   };
 
   if (error) {
@@ -118,44 +118,44 @@ export default function DashboardPage() {
 
   return (
     <div className="container-fluid p-4">
-      <h1 className="mb-4 text-3xl font-bold">Personajes de Rick and Morty</h1>
+      <h1 className="mb-4 text-3xl font-bold">Rick and Morty Characters</h1>
 
-      {/* Estadísticas Globales */}
+      {/* Global Statistics */}
       <div className="row mb-4">
         <div className="col-md-4">
           <StatsCard 
-            title="Vivos" 
+            title="Alive" 
             value={aliveCount} 
             variant="success" 
           />
         </div>
         <div className="col-md-4">
           <StatsCard 
-            title="Muertos" 
+            title="Dead" 
             value={deadCount} 
             variant="danger" 
           />
         </div>
         <div className="col-md-4">
           <StatsCard 
-            title="Desconocido" 
+            title="Unknown" 
             value={unknownCount} 
             variant="warning" 
           />
         </div>
       </div>
 
-      {/* Info y Filtros */}
+      {/* Info and Filters */}
       <div className="mb-4 p-4 rounded-lg bg-white shadow-sm">
         <div className="flex flex-col md:flex-row gap-3 items-end">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Buscar personaje
+              Search character
             </label>
             <input
               type="text"
               className="form-control"
-              placeholder="Escribe un nombre..."
+              placeholder="Type a name..."
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
             />
@@ -163,27 +163,27 @@ export default function DashboardPage() {
 
           <div className="w-full md:w-48">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Estado
+              Status
             </label>
             <select
               className="form-select"
               value={statusFilter}
               onChange={e => handleStatusChange(e.target.value)}
             >
-              <option value="">Todos</option>
-              <option value="Alive">Vivos</option>
-              <option value="Dead">Muertos</option>
-              <option value="unknown">Desconocido</option>
+              <option value="">All</option>
+              <option value="Alive">Alive</option>
+              <option value="Dead">Dead</option>
+              <option value="unknown">Unknown</option>
             </select>
           </div>
 
           <div className="text-sm text-gray-600 px-3 py-2 bg-blue-50 rounded-lg">
-            📊 Total: <strong>{totalCount}</strong> personajes
+            📊 Total: <strong>{totalCount}</strong> characters
           </div>
         </div>
       </div>
 
-      {/* Paginación Superior */}
+      {/* Top Pagination */}
       {!loading && characters.length > 0 && (
         <Pagination
           currentPage={currentPage}
@@ -199,12 +199,12 @@ export default function DashboardPage() {
         <div className="flex justify-center items-center py-12">
           <div className="text-center">
             <div className="spinner-border text-primary mb-2" role="status"></div>
-            <p className="text-gray-600">Cargando personajes...</p>
+            <p className="text-gray-600">Loading characters...</p>
           </div>
         </div>
       )}
 
-      {/* Grid de Personajes */}
+      {/* Characters Grid */}
       {!loading && characters.length > 0 && (
         <div className="my-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {characters.map(character => (
@@ -238,14 +238,14 @@ export default function DashboardPage() {
                       </span>
                     </p>
                     <p className="text-sm text-gray-600 mb-1">
-                      <strong>Especie:</strong> {character.species}
+                      <strong>Species:</strong> {character.species}
                     </p>
                     <p className="text-sm text-gray-600 mb-0">
-                      <strong>Género:</strong> {character.gender}
+                      <strong>Gender:</strong> {character.gender}
                     </p>
                   </div>
                   <div className="mt-3 text-center">
-                    <span className="text-xs text-blue-600 font-semibold">Ver detalles →</span>
+                    <span className="text-xs text-blue-600 font-semibold">View details →</span>
                   </div>
                 </div>
               </div>
@@ -254,18 +254,18 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Sin Resultados */}
+      {/* No Results */}
       {!loading && characters.length === 0 && !error && (
         <div className="flex flex-col items-center justify-center py-12">
           <div className="text-center">
             <span className="text-6xl mb-4">🔍</span>
-            <h3 className="text-xl font-bold text-gray-700 mb-2">Personaje no encontrado</h3>
-            <p className="text-gray-500">Intenta con otro nombre o ajusta los filtros</p>
+            <h3 className="text-xl font-bold text-gray-700 mb-2">Character not found</h3>
+            <p className="text-gray-500">Try another name or adjust the filters</p>
           </div>
         </div>
       )}
 
-      {/* Paginación Inferior */}
+      {/* Bottom Pagination */}
       {!loading && characters.length > 0 && (
         <Pagination
           currentPage={currentPage}

@@ -30,17 +30,17 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!form.email || !form.password) {
-      notification('Todos los campos son obligatorios', 'error');
+      notification('All fields are required', 'error');
       return;
     }
 
     const success = login(form.email, form.password);
     
     if (success) {
-      notification('Inicio de sesión exitoso', 'success');
+      notification('Login successful', 'success');
       router.push('/dashboard');
     } else {
-      notification('Credenciales incorrectas', 'error');
+      notification('Invalid credentials', 'error');
     }
   };
 
@@ -50,12 +50,12 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm space-y-4 border bg-white p-6 rounded-lg shadow"
       >
-        <h1 className="text-2xl font-bold text-center">Iniciar sesión</h1>
+        <h1 className="text-2xl font-bold text-center">Sign In</h1>
 
         <input
           type="email"
           name="email"
-          placeholder="Correo electrónico"
+          placeholder="Email"
           value={form.email}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -64,7 +64,7 @@ export default function LoginPage() {
         <input
           type="password"
           name="password"
-          placeholder="Contraseña"
+          placeholder="Password"
           value={form.password}
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -74,11 +74,11 @@ export default function LoginPage() {
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
         >
-          Ingresar
+          Sign In
         </button>
 
         <p className="text-center text-sm text-gray-600">
-          ¿No tienes cuenta? <Link href="/register" className="text-blue-600 hover:underline">Regístrate</Link>
+          Don't have an account? <Link href="/register" className="text-blue-600 hover:underline">Register</Link>
         </p>
       </form>
     </main>

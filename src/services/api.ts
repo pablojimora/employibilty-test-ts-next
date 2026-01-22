@@ -12,14 +12,14 @@ export interface GetCharactersParams {
 }
 
 /**
- * Obtiene la lista de personajes de Rick and Morty con paginación y filtros
+ * Gets the list of Rick and Morty characters with pagination and filters
  */
 export async function getCharacters(params?: GetCharactersParams): Promise<CharactersResponse> {
   try {
     const response = await axios.get<CharactersResponse>(`${API_BASE_URL}/character`, { params });
     return response.data;
   } catch (error: any) {
-    // Si es 404, significa que no hay resultados - devolver respuesta vacía
+    // If 404, it means no results - return empty response
     if (error.response?.status === 404) {
       return {
         info: {
@@ -31,14 +31,14 @@ export async function getCharacters(params?: GetCharactersParams): Promise<Chara
         results: []
       };
     }
-    // Cualquier otro error se propaga
+    // Any other error is propagated
     console.error('Error fetching characters:', error);
     throw error;
   }
 }
 
 /**
- * Obtiene un personaje específico por ID
+ * Gets a specific character by ID
  */
 export async function getCharacterById(id: number) {
   try {
@@ -51,7 +51,7 @@ export async function getCharacterById(id: number) {
 }
 
 /**
- * Busca personajes por nombre
+ * Searches characters by name
  */
 export async function searchCharactersByName(name: string): Promise<CharactersResponse> {
   try {
@@ -66,7 +66,7 @@ export async function searchCharactersByName(name: string): Promise<CharactersRe
 }
 
 /**
- * Filtra personajes por status
+ * Filters characters by status
  */
 export async function filterCharactersByStatus(status: string): Promise<CharactersResponse> {
   try {
