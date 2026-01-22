@@ -1,38 +1,21 @@
-'use client'
-import { getCharacters } from "@/services/api"
-import { Card } from "../components/Card"
-import { useEffect, useState } from "react"
+'use client';
+
+import { useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import LoadingState from '@/components/Loadingstate';
 
 export default function Home() {
-  const [characters, setCharacters] = useState<any[]>([])
-  const [loading, setLoading] = useState(false)
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    setLoading(true)
-    fetch("https://rickandmortyapi.com/api/character")
-      .then(res => res.json())
-      .then(data => {
-        setCharacters(data)
-        setLoading(false)
-      })
-  }, [])
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push('/login');
+    }
+  }, [user, router]);
 
-  if (loading) return <p>Cargando...</p>
-
-  return (
-    <div>
-      {characters.map((char, index) => (
-        <div key={index}>
-          <h3>{char.name}</h3>
-          <Card
-            title={char.name}
-            description={char.description}
-            imageUrl={char.image}
-            onClick={() => getCharacters()}
-          />
-          <img src={char.image} />
-        </div>
-      ))}
-    </div>
-  )
+  return <LoadingState />;
 }

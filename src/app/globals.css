@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Line clamp para truncar texto */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  
+  /* Auto rows para grids uniformes */
+  .auto-rows-fr {
+    grid-auto-rows: 1fr;
+  }
+  
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Mejoras de performance */
+  img {
+    content-visibility: auto;
+  }
+}
+
+@layer components {
+  /* Container fluido mejorado */
+  .container-fluid {
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  /* Cards Bootstrap mejoradas */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-top-left-radius: calc(0.75rem - 1px);
+    border-top-right-radius: calc(0.75rem - 1px);
+  }
+  
+  .card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+  }
+  
+  .card-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .card-text {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Badges mejorados */
+  .badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .bg-success {
+    background-color: #10b981 !important;
+  }
+  
+  .bg-danger {
+    background-color: #ef4444 !important;
+  }
+  
+  .bg-secondary {
+    background-color: #6b7280 !important;
+  }
+  
+  /* Form controls mejorados */
+  .form-control,
+  .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #374151;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    color: #374151;
+    background-color: #fff;
+    border-color: #3b82f6;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  }
+  
+  /* Grid system */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+  }
+  
+  .g-2 > * {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-6 {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  
+  .col-md-2 { flex: 0 0 auto; width: 16.666667%; }
+  .col-md-3 { flex: 0 0 auto; width: 25%; }
+  .col-md-4 { flex: 0 0 auto; width: 33.333333%; }
+  .col-md-6 { flex: 0 0 auto; width: 50%; }
+  
+  @media (max-width: 768px) {
+    .col-md-2,
+    .col-md-3,
+    .col-md-4,
+    .col-md-6 {
+      width: 100%;
+    }
+  }
+  
+  /* Utilities */
+  .mb-4 { margin-bottom: 1.5rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .p-3 { padding: 0.75rem; }
+  .p-4 { padding: 1rem; }
+  .rounded { border-radius: 0.5rem; }
+  .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+  .text-center { text-align: center; }
+  .fw-bold { font-weight: 700; }
+  .text-success { color: #10b981; }
+  .text-danger { color: #ef4444; }
+  .text-warning { color: #f59e0b; }
+  .text-muted { color: #6b7280; }
+  .d-flex { display: flex; }
+  .align-items-center { align-items: center; }
+  
+  /* Alerts */
+  .alert {
+    position: relative;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+  }
+  
+  .alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+  }
+  
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+}

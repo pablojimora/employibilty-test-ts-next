@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import { notification } from '@/helpers/notificaciones';
 
 interface RegisterForm {
   name: string;
@@ -10,14 +13,14 @@ interface RegisterForm {
 }
 
 export default function RegisterPage() {
+  const { register } = useAuth();
+  const router = useRouter();
   const [form, setForm] = useState<RegisterForm>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -28,7 +31,6 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     if (
       !form.name ||
@@ -36,27 +38,32 @@ export default function RegisterPage() {
       !form.password ||
       !form.confirmPassword
     ) {
-      setError('Todos los campos son obligatorios');
+      notification('Todos los campos son obligatorios', 'error');
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      notification('Las contraseñas no coinciden', 'error');
       return;
     }
 
-    console.warn('Registro simulado:', form);
+    const success = register(form.name, form.email, form.password);
+    
+    if (success) {
+      notification('Registro exitoso. Ahora puedes iniciar sesión', 'success');
+      router.push('/login');
+    } else {
+      notification('El correo ya está registrado', 'error');
+    }
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center">
+    <main className="flex min-h-screen items-center justify-center bg-gray-50">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm space-y-4 border p-6 rounded"
+        className="w-full max-w-sm space-y-4 border bg-white p-6 rounded-lg shadow"
       >
-        <h1 className="text-xl font-semibold">Registro</h1>
-
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        <h1 className="text-2xl font-bold text-center">Registro</h1>
 
         <input
           type="text"
@@ -64,7 +71,7 @@ export default function RegisterPage() {
           placeholder="Nombre completo"
           value={form.name}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -73,7 +80,7 @@ export default function RegisterPage() {
           placeholder="Correo electrónico"
           value={form.email}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -82,7 +89,7 @@ export default function RegisterPage() {
           placeholder="Contraseña"
           value={form.password}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
@@ -91,12 +98,12 @@ export default function RegisterPage() {
           placeholder="Confirmar contraseña"
           value={form.confirmPassword}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
         >
           Registrarse
         </button>
